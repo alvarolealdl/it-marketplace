@@ -1,0 +1,48 @@
+@import "./Variables.scss";
+
+.mktp-login {
+  align-items: center;
+  background-color: #f0f2f5;
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+
+  &__info {
+    text-align: center;
+
+    h1 {
+      font-weight: bold;
+    }
+
+    h4 {
+      font-weight: normal;
+    }
+  }
+
+  &__box {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 6px 6px 4px rgba(255, 219, 88, 0.5);
+    width: 400px;
+
+    form {
+      label {
+        font-weight: bold;
+      }
+
+      .login-icon {
+        background-color: $white;
+        position: absolute;
+        transform: translate(-48px, 9px);
+        width: 44px;
+      }
+    }
+
+    &__wrapper {
+      margin-bottom: 10px;
+    }
+  }
+}

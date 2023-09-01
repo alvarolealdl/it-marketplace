@@ -1,0 +1,57 @@
+@import "./Variables.scss";
+
+.mktp-create-user {
+  align-items: center;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+
+  &__box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 6px 6px 4px rgba(255, 219, 88, 0.5);
+    padding: 30px;
+    width: 400px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      div {
+        label {
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      position: relative;
+
+      &:last-child {
+        flex-direction: unset;
+        justify-content: space-between;
+      }
+
+      .mktp-btn {
+        &-primary,
+        &-secondary {
+          width: auto;
+        }
+      }
+
+      &__icon {
+        background-color: $white;
+        cursor: pointer;
+        position: absolute;
+        right: 4px;
+        top: 44%;
+        width: 44px;
+      }
+    }
+  }
+}

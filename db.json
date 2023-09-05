@@ -1,14 +1,40 @@
 {
   "users": [
     {
-      "id": 1,
       "username": "test",
-      "password": "test"
+      "email": "test@test.com",
+      "password": "test",
+      "id": 1
+    }
+  ],
+  "negotiations": [
+    {
+      "title": "Exemplo 1",
+      "description": "Exemplo 1 descrição",
+      "price": "500,00",
+      "id": 1
     },
     {
-      "username": "leal",
-      "password": "aL1*",
-      "id": 2
+      "title": "Exemplo 2",
+      "description": "Exemplo 2 descrição",
+      "price": "100,00",
+      "id": 1
+    },
+    {
+      "title": "Exemplo 3",
+      "description": "Exemplo 3 descrição",
+      "price": "700,00",
+      "id": 3
+    }
+  ],
+  "messages": [
+    {
+      "sender": "user1",
+      "message": "Aceita oferta?"
+    },
+    {
+      "sender": "user2",
+      "message": "Tenho interesse!"
     }
   ]
 }

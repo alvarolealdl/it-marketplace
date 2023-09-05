@@ -20,4 +20,4 @@ Essa aplicação conta com:
 
 --> Basta rodar **json-server --watch db.json** no terminal para deixar o servidor funcionando.
 
---> A aplicação foi construida utilizando o Vite. Se quiser utilizar o servidor do Vite para visualizar a aplicação, basta rodar **yarn dev** e clicar no link gerado.
+--> A aplicação foi construida utilizando o Vite. Se quiser utilizar o servidor do Vite para visualizar a aplicação, basta rodar **yarn dev --host** e clicar no primeiro link gerado, localhost.

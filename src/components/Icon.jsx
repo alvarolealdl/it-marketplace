@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 
-const Icon = ({ className, iconSize, onClick, typeIcon, fill }) => {
+const Icon = ({ className, size, onClick, typeIcon, fill }) => {
   return (
     <>
       {typeIcon === "visible-password" && (
         <svg
           className={className}
-          height={iconSize ? iconSize + "px" : "30px"}
+          height={size ? size + "px" : "30px"}
           onClick={onClick}
           viewBox="0 0 24 24"
           fill={fill ? fill : "none"}
@@ -42,7 +42,7 @@ const Icon = ({ className, iconSize, onClick, typeIcon, fill }) => {
         <svg
           className={className}
           onClick={onClick}
-          height={iconSize ? iconSize + "px" : "30px"}
+          height={size ? size + "px" : "30px"}
           viewBox="0 0 28 28"
           fill={fill ? fill : "none"}
           xmlns="http://www.w3.org/2000/svg"
@@ -59,13 +59,51 @@ const Icon = ({ className, iconSize, onClick, typeIcon, fill }) => {
           />
         </svg>
       )}
+
+      {typeIcon === "list-dashes" && (
+        <svg
+          className={className}
+          onClick={onClick}
+          height={size ? size + "px" : "30px"}
+          viewBox="0 0 256 256"
+          fill={fill ? fill : "none"}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M90,64a6.00029,6.00029,0,0,1,6-6H216a6,6,0,0,1,0,12H96A6.00029,6.00029,0,0,1,90,64Zm126,58H96.00586a6,6,0,1,0,0,12H216a6,6,0,0,0,0-12Zm0,64H96.00586a6,6,0,1,0,0,12H216a6,6,0,0,0,0-12ZM56,58H40a6,6,0,0,0,0,12H56a6,6,0,0,0,0-12Zm0,64H40.00586a6,6,0,1,0,0,12H56a6,6,0,0,0,0-12Zm0,64H40.00586a6,6,0,1,0,0,12H56a6,6,0,0,0,0-12Z" />
+        </svg>
+      )}
+
+      {typeIcon === "dropdown" && (
+        <svg
+          className={className}
+          onClick={onClick}
+          height={size ? size + "px" : "30px"}
+          viewBox="0 0 48 48"
+          fill={fill ? fill : "none"}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="48" height="48" fill="white" />
+          <path
+            d="M40 28L24 40L8 28"
+            stroke="#000000"
+          />
+          <path
+            d="M8 10H40"
+            stroke="#000000"
+          />
+          <path
+            d="M8 18H40"
+            stroke="#000000"
+          />
+        </svg>
+      )}
     </>
   );
 };
 
 Icon.propTypes = {
   className: PropTypes.string,
-  iconSize: PropTypes.number,
+  size: PropTypes.number,
   onClick: PropTypes.func,
   typeIcon: PropTypes.string,
   fill: PropTypes.string,

@@ -1,0 +1,64 @@
+@import "./Variables.scss";
+
+.mktp-create-negotiation {
+  align-items: center;
+  background-color: $light-gray;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.625rem;
+    position: relative;
+
+    &:last-child {
+      flex-direction: unset;
+      justify-content: space-between;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0.3125rem;
+    }
+
+    textarea {
+      border: 0.125rem solid $input-border;
+      border-radius: 0.3125rem;
+      font-size: 1rem;
+      margin-bottom: 0.625rem;
+      padding: 0.625rem;
+      width: 100%;
+
+      &:focus {
+        border: 0.125rem solid $input-border-focused;
+        outline: none;
+      }
+    }
+
+    textarea {
+      height: 6.25rem;
+    }
+  }
+
+  .wrapper:last-child {
+    text-align: center;
+
+    button {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+@media (max-width: $sm) {
+  .mktp-create-negotiation__wrapper:last-child {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+}

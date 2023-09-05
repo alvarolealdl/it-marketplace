@@ -1,13 +1,7 @@
 @import "./Variables.scss";
 
 .mktp-login {
-  align-items: center;
-  background-color: #f0f2f5;
-  display: flex;
-  gap: 3rem;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 1rem;
+  gap: 2rem;
 
   &__info {
     text-align: center;
@@ -22,12 +16,7 @@
   }
 
   &__box {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: 6px 6px 4px rgba(255, 219, 88, 0.5);
-    width: 400px;
-
+    min-height: 27.625rem;
     form {
       label {
         font-weight: bold;
@@ -36,13 +25,58 @@
       .login-icon {
         background-color: $white;
         position: absolute;
-        transform: translate(-48px, 9px);
-        width: 44px;
+        transform: translate(-3rem, 0.5625rem);
+        width: 2.75rem;
       }
     }
 
     &__wrapper {
-      margin-bottom: 10px;
+      margin-bottom: 0.625rem;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .mktp-login {
+    flex-direction: column;
+
+    &__info {
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__box__wrapper:last-child {
+      display: grid;
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: $sm) {
+  .mktp-login {
+    &__info {
+      h1 {
+        font-size: 1.25rem;
+      }
+
+      h4 {
+        font-size: 1rem;
+      }
+    }
+
+    &__box {
+      .separator {
+        display: none !important;
+      }
     }
   }
 }

@@ -1,0 +1,66 @@
+@import "./Variables.scss";
+
+.mktp-homepage {
+  padding: 2rem 1rem;
+
+  &__grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+
+    &__card {
+      background-color: $medium-gray;
+      border-radius: 0.25rem;
+      padding: 1rem;
+      width: 100%;
+
+      &:nth-child(odd) {
+        margin-right: 1rem;
+      }
+
+      &__title {
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+      }
+
+      &__description {
+        color: $black;
+        font-size: 0.875rem;
+      }
+
+      &__btn {
+        background-color: $primary;
+        border: none;
+        border-radius: 0.25rem;
+        color: $black;
+        cursor: pointer;
+        margin-top: 0.625rem;
+        padding: 0.625rem 1.25rem;
+        width: 9.375rem;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $md) {
+    .mktp-homepage {
+      &__grid-container {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: auto;
+      }
+
+      &__card {
+        margin-right: 0;
+        width: 100%;
+
+        &:nth-child(odd) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

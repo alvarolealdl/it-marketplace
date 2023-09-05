@@ -1,0 +1,54 @@
+@import "../Variables.scss";
+
+.mktp-btn {
+  &-primary,
+  &-secondary,
+  &-default,
+  &-outline {
+    width: auto;
+  }
+}
+
+.mktp-btn {
+  &-primary,
+  &-secondary,
+  &-default {
+    border: none;
+    border-radius: 0.25rem;
+    color: $black;
+    padding: 0.625rem 1.25rem;
+    width: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &-outline {
+    border: none;
+    padding: 0.625rem 1.25rem;
+    width: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &-primary {
+    background-color: $btn-primary;
+  }
+
+  &-secondary,
+  &-default {
+    background-color: $btn-secondary;
+  }
+}
+
+@media (max-width: $sm) {
+  .mktp-create-user__box__wrapper {
+    .mktp-btn-primary,
+    .mktp-btn-secondary {
+      width: 100% !important;
+    }
+  }
+}

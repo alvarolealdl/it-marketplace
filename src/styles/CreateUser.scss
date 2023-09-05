@@ -1,19 +1,7 @@
 @import "./Variables.scss";
 
 .mktp-create-user {
-  align-items: center;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-
   &__box {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 6px 6px 4px rgba(255, 219, 88, 0.5);
-    padding: 30px;
-    width: 400px;
-
     form {
       display: flex;
       flex-direction: column;
@@ -21,7 +9,7 @@
       div {
         label {
           font-weight: bold;
-          margin-bottom: 5px;
+          margin-bottom: 0.3125rem;
         }
       }
     }
@@ -29,7 +17,7 @@
     &__wrapper {
       display: flex;
       flex-direction: column;
-      margin-bottom: 10px;
+      margin-bottom: 0.625rem;
       position: relative;
 
       &:last-child {
@@ -37,21 +25,21 @@
         justify-content: space-between;
       }
 
-      .mktp-btn {
-        &-primary,
-        &-secondary {
-          width: auto;
-        }
-      }
-
       &__icon {
         background-color: $white;
         cursor: pointer;
         position: absolute;
-        right: 4px;
+        right: 0.25rem;
         top: 44%;
-        width: 44px;
+        width: 2.75rem;
       }
     }
+  }
+}
+
+@media (max-width: $sm) {
+  .mktp-create-user__box__wrapper:last-child {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
   }
 }

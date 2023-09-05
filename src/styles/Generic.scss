@@ -1,107 +1,85 @@
 @import "./Variables.scss";
 
+body {
+  background: $light-gray;
+}
+
 #root {
   font-family: Arial, sans-serif;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 div {
   h4 {
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
 }
 
-form {
-  input {
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
+.mktp-create-user,
+.mktp-login {
+  align-items: center;
+  background-color: $light-gray;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
 
-    &:focus {
-      border: 2px solid $primary;
-      outline: none;
+.mktp-login__box,
+.mktp-create-user__box,
+.mktp-create-negotiation__box {
+  background-color: $white;
+  border-radius: 0.5rem;
+  box-shadow: 0.375rem 0.375rem 0.25rem $login-box-shadow;
+  padding: 1.875rem;
+  width: 25rem;
+
+  form {
+    input {
+      border: 0.125rem solid $input-border;
+      border-radius: 0.3125rem;
+      font-size: 1rem;
+      margin-bottom: 0.625rem;
+      padding: 0.625rem;
+      width: 100%;
+
+      &:focus {
+        border: 0.125rem solid $input-border-focused;
+        outline: none;
+      }
     }
   }
+}
 
-  .separator {
-    align-items: center;
-    display: flex;
-    margin: 20px 0;
+.separator {
+  align-items: center;
+  display: flex;
+  margin: 1.25rem 0;
 
-    .line {
-      background-color: #ddd;
-      flex: 1;
-      height: 1px;
-    }
+  .line {
+    background-color: $input-border;
+    flex: 1;
+    height: 0.0625rem;
+  }
 
-    p {
-      color: #555;
-      font-size: 14px;
-      margin: 0 10px;
-    }
+  p {
+    color: $box-text-between-buttons;
+    font-size: 0.875rem;
+    margin: 0 0.625rem;
   }
 }
 
-.mktp-btn {
-  &-primary,
-  &-secondary {
-    border: none;
-    border-radius: 4px;
-    color: $black;
-    padding: 10px 20px;
-    width: 100%;
-
-    &:hover {
-      opacity: 0.8;
-    }
+@media (max-width: $sm) {
+  .mktp-create-user,
+  .mktp-login {
+    min-height: auto;
   }
 
-  &-primary {
-    background-color: $btn-primary;
+  .mktp-login__box {
+    width: calc(100% - 1rem);
   }
-
-  &-secondary {
-    background-color: $btn-secondary;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-.error-message {
-  animation: fadeOut 7s;
-  background-color: $msg-error-background;
-  color: $msg-error;
-  font-size: 14px;
-  font-weight: bold;
-  left: 0;
-  padding: 10px;
-  position: absolute;
-  text-align: center;
-  top: 0;
-  width: 100%;
-}
-
-.success-message {
-  animation: fadeOut 7s;
-  background-color: $msg-success;
-  color: $white;
-  font-size: 14px;
-  font-weight: bold;
-  left: 0;
-  padding: 10px;
-  position: absolute;
-  text-align: center;
-  top: 0;
-  width: 100%;
 }

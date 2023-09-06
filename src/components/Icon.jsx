@@ -83,18 +83,27 @@ const Icon = ({ className, size, onClick, typeIcon, fill }) => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <rect width="48" height="48" fill="white" />
-          <path
-            d="M40 28L24 40L8 28"
-            stroke="#000000"
-          />
-          <path
-            d="M8 10H40"
-            stroke="#000000"
-          />
-          <path
-            d="M8 18H40"
-            stroke="#000000"
-          />
+          <path d="M40 28L24 40L8 28" stroke="#000000" />
+          <path d="M8 10H40" stroke="#000000" />
+          <path d="M8 18H40" stroke="#000000" />
+        </svg>
+      )}
+
+      {typeIcon === "close" && (
+        <svg
+          className={className}
+          onClick={onClick}
+          height={size ? size + "px" : "30px"}
+          viewBox="0 0 32 32"
+          fill={fill ? fill : ""}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="Reject">
+            <path
+              className="cls-1"
+              d="M16,4A12,12,0,1,0,28,16,12.0134,12.0134,0,0,0,16,4Zm4.707,15.293a1,1,0,1,1-1.414,1.414L16,17.4141,12.707,20.707a1,1,0,0,1-1.414-1.414L14.5859,16,11.293,12.707a1,1,0,0,1,1.414-1.414L16,14.5859l3.293-3.2929a1,1,0,0,1,1.414,1.414L17.4141,16Z"
+            />
+          </g>
         </svg>
       )}
     </>

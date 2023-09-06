@@ -12,11 +12,13 @@
     &__card {
       background-color: $medium-gray;
       border-radius: 0.25rem;
+      display: grid;
+      grid-template-rows: min-content;
       padding: 1rem;
       width: 100%;
 
-      &:nth-child(odd) {
-        margin-right: 1rem;
+      h3 {
+        border-bottom: 1px solid #000;
       }
 
       &__title {
@@ -30,11 +32,13 @@
       }
 
       &__btn {
+        align-self: end;
         background-color: $primary;
         border: none;
         border-radius: 0.25rem;
         color: $black;
         cursor: pointer;
+        justify-self: end;
         margin-top: 0.625rem;
         padding: 0.625rem 1.25rem;
         width: 9.375rem;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
@@ -19,9 +20,8 @@ const ViewNegotiation = () => {
   const [saveMessages, setSaveMessages] = useState("");
   const [messages, setMessages] = useState([]);
   const [offerAmount, setOfferAmount] = useState("");
-
-  const { id } = useParams();
   const { auth, user } = useAuth0();
+  const id = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const ViewNegotiation = () => {
       setUserRole(isCreator ? "negotiation-creator" : "other");
     } catch (error) {
       console.error("Erro ao buscar negociação:", error);
+      toast.error("Erro ao buscar negociação");
     }
   };
 
@@ -61,7 +62,6 @@ const ViewNegotiation = () => {
   const handleViewDetailsClick = () => {
     setShowDescription(true);
     toggleDescription();
-    console.log("Detalhes da negociação:", negotiationData);
   };
 
   // Function to handle clicking "Send Message" button
@@ -81,12 +81,11 @@ const ViewNegotiation = () => {
       // Send the message to the server
       await axios.post(`http://localhost:3000/messages`, messageData);
 
-      console.log("Mensagem enviada com sucesso!");
-
       // Load messages from the server
       loadMessagesFromServer();
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error);
+      toast.error("Erro ao enviar mensagem");
     }
   };
 
@@ -98,9 +97,9 @@ const ViewNegotiation = () => {
 
       // Set the messages state with fetched messages
       setMessages(storedMessages);
-      console.log("Mensagens carregadas do servidor:", storedMessages);
     } catch (error) {
       console.error("Erro ao carregar mensagens do servidor:", error);
+      toast.error("Erro ao carregar mensagens do servidor");
     }
   };
 
@@ -122,11 +121,10 @@ const ViewNegotiation = () => {
       // Send the offer data to the server
       await axios.post(`http://localhost:3000/offers`, offerData);
 
-      console.log("Oferta enviada com sucesso!");
-
       fetchNegotiationData();
     } catch (error) {
       console.error("Erro ao fazer oferta:", error);
+      toast.error("Erro ao fazer oferta");
     }
   };
 
@@ -181,7 +179,7 @@ const ViewNegotiation = () => {
               <Icon
                 className="pointer"
                 fill={"#000"}
-                size={"40"}
+                size={40}
                 typeIcon={"dropdown"}
                 onClick={toggleDropdown}
               />
@@ -219,7 +217,7 @@ const ViewNegotiation = () => {
                 <Icon
                   className="pointer"
                   fill={"#000"}
-                  size={"40"}
+                  size={40}
                   typeIcon={"dropdown"}
                   onClick={toggleDropdown}
                 />
@@ -232,8 +230,17 @@ const ViewNegotiation = () => {
                   showChat && "d-grid"
                 }`}
               >
-                <div className="mktp-view-negotiation__box__title__wrapper d-flex">
+                <div className="mktp-view-negotiation__box__title__wrapper d-flex justify-content-between">
                   <h3>Chat</h3>
+                  <Icon
+                    className="pointer"
+                    fill={"#000"}
+                    size={30}
+                    typeIcon={"close"}
+                    onClick={() => {
+                      setShowChat(false);
+                    }}
+                  />
                 </div>
                 <div className="mktp-view-negotiation__box__title__new-message">
                   <label>Insira sua mensagem:</label>
@@ -312,7 +319,18 @@ const ViewNegotiation = () => {
                   <div className="line"></div>
                 </div>
                 <div className="message-history">
-                  <h3>Histórico de Mensagens</h3>
+                  <div className="d-flex justify-content-between">
+                    <h3>Histórico de Mensagens</h3>
+                    <Icon
+                      className="pointer"
+                      fill={"#000"}
+                      size={30}
+                      typeIcon={"close"}
+                      onClick={() => {
+                        setShowMessageHistory(false);
+                      }}
+                    />
+                  </div>
                   <ul>
                     {messages.map((message, index) => (
                       <li key={index} className="mb-2">

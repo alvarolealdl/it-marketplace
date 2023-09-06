@@ -38,10 +38,11 @@ const CreateNegotiation = ({ userId, userEmail }) => {
         },
         (error) => {
           console.error("Erro ao obter localização:", error);
+          toast.error("Erro ao obter localização");
         }
       );
     } else {
-      console.log("Geolocalização não suportada no navegador.");
+      toast.warn("Geolocalização não suportada no navegador.");
     }
   }, []);
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Card from "../../components/Card";
 import axios from "axios";
 
@@ -23,15 +24,18 @@ const Home = () => {
             },
             (error) => {
               console.error("Erro ao obter a localização do usuário:", error);
+              toast.error("Erro ao obter a localização do usuário");
               setUserLocation(null);
             }
           );
         } else {
           console.error("Geolocalização não suportada pelo navegador");
+          toast.error("Geolocalização não suportada pelo navegador");
           setUserLocation(null);
         }
       } catch (error) {
         console.error("Erro ao obter a localização do usuário:", error);
+        toast.error("Erro ao obter a localização do usuário");
         setUserLocation(null);
       }
     };
@@ -75,10 +79,12 @@ const Home = () => {
 
           setOffers(topNineOffers);
         } else {
-          console.error("Erro ao carregar as ofertas do arquivo JSON");
+          console.error("Erro ao carregar as ofertas do arquivo DB");
+          toast.error("Erro ao carregar as ofertas do arquivo DB");
         }
       } catch (error) {
-        console.error("Erro ao carregar as ofertas do arquivo JSON:", error);
+        console.error("Erro ao carregar as ofertas do arquivo DB:", error);
+        toast.error("Erro ao carregar as ofertas do arquivo DB");
       }
     };
 
@@ -111,7 +117,7 @@ const Home = () => {
   const handleEnterClick = (offerId) => {
     navigateTo(`/negotiation/${offerId}`);
   };
-
+  
   return (
     <div className="container">
       <div className="mktp-homepage">

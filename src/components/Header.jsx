@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Button from "./Button";
 import Icon from "./Icon";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
-import axios from "axios"; 
+import axios from "axios";
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -31,15 +32,16 @@ const Header = () => {
           `http://localhost:3000/negotiations?query=${encodeURIComponent(
             searchTerm
           )}`
-        );console.log(response.status)
+        );
 
         if (response.status === 200) {
           navigateTo(`/?query=${encodeURIComponent(searchTerm)}`);
         } else {
-          console.error("Erro ao buscar negociações.");
+          toast.error("Erro ao buscar negociações.");
         }
       } catch (error) {
         console.error("Erro ao buscar negociações:", error);
+        toast.error("Erro ao buscar negociações.");
       }
     }
   };

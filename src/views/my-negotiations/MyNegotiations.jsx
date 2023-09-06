@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
@@ -40,6 +41,7 @@ const MyNegotiations = () => {
       setUserOffers(userOffers);
     } catch (error) {
       console.error("Erro ao buscar negociações e ofertas do usuário:", error);
+      toast.error("Erro ao buscar negociações e ofertas do usuário");
     }
   };
 

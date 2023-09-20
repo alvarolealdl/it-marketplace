@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
 
-const ViewNegotiation = () => {
+const ViewNegotiation = ({ theme }) => {
   const [negotiationData, setNegotiationData] = useState({
     title: "",
     description: "",
@@ -23,6 +24,8 @@ const ViewNegotiation = () => {
   const { auth, user } = useAuth0();
   const id = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
+
+  // console.log("ISAUTH:", isAuthenticated);
 
   useEffect(() => {
     fetchNegotiationData();
@@ -156,64 +159,31 @@ const ViewNegotiation = () => {
     navigate(`/track-delivery-status/${id}`);
   };
 
+  console.log("theme", theme);
+
   return (
-    <div className="mktp-view-negotiation">
-      <div className="mktp-view-negotiation__box">
-        <h2>Detalhes da Negociação</h2>
-        <p>
-          Título: <em>{negotiationData.title}</em>
-        </p>
+    <div className={`mktp-view-negotiation`}>
+      <div className="mktp-view-negotiation">
+        <div className="mktp-view-negotiation__box">
+          <h2>Detalhes da Negociação</h2>
+          <p>
+            Título: <em>{negotiationData.title}</em>
+          </p>
 
-        <p>
-          Descrição: {showDescription && <em>{negotiationData.description}</em>}
-        </p>
+          <p>
+            Preço: <em>{negotiationData.price}</em>
+          </p>
 
-        <p>
-          Preço: <em>{negotiationData.price}</em>
-        </p>
+          {showDescription && (
+            <p>
+              Descrição: <em>{negotiationData.description}</em>
+            </p>
+          )}
 
-        {userRole === "negotiation-creator" && (
-          <>
-            <div className="mktp-view-negotiation__box__title">
-              <h3>Ações do Criador</h3>
-              <Icon
-                className="pointer"
-                fill={"#000"}
-                size={40}
-                typeIcon={"dropdown"}
-                onClick={toggleDropdown}
-              />
-            </div>
-            <div className="mktp-view-negotiation__box__menu">
-              {showDropdown && (
-                <div className="mktp-view-negotiation__box__menu__dropdown">
-                  <ul>
-                    <li>
-                      <Button
-                        type="primary"
-                        text="Ver Detalhes"
-                        onClick={handleViewDetailsClick}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="secondary"
-                        text="Ver e Responder Mensagens"
-                        onClick={handleViewMessagesClick}
-                      />
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </>
-        )}
-
-        {userRole !== "other" && (
-          <>
-            {!showChat && (
+          {userRole === "negotiation-creator" && (
+            <>
               <div className="mktp-view-negotiation__box__title">
-                <h3>Ações dos Outros Usuários</h3>
+                <h3>Ações do Criador</h3>
                 <Icon
                   className="pointer"
                   fill={"#000"}
@@ -222,132 +192,176 @@ const ViewNegotiation = () => {
                   onClick={toggleDropdown}
                 />
               </div>
-            )}
+              <div className="mktp-view-negotiation__box__menu">
+                {showDropdown && (
+                  <div className="mktp-view-negotiation__box__menu__dropdown">
+                    <ul>
+                      <li>
+                        <Button
+                          type="primary"
+                          text="Ver Detalhes"
+                          onClick={handleViewDetailsClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="secondary"
+                          text="Ver e Responder Mensagens"
+                          onClick={handleViewMessagesClick}
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
 
-            {showChat && (
-              <div
-                className={`mktp-view-negotiation__box__title ${
-                  showChat && "d-grid"
-                }`}
-              >
-                <div className="mktp-view-negotiation__box__title__wrapper d-flex justify-content-between">
-                  <h3>Chat</h3>
+          {userRole !== "other" && (
+            <>
+              {!showChat && (
+                <div className="mktp-view-negotiation__box__title">
+                  <h3>Ações dos Outros Usuários</h3>
                   <Icon
                     className="pointer"
                     fill={"#000"}
-                    size={30}
-                    typeIcon={"close"}
-                    onClick={() => {
-                      setShowChat(false);
-                    }}
+                    size={40}
+                    typeIcon={"dropdown"}
+                    onClick={toggleDropdown}
                   />
-                </div>
-                <div className="mktp-view-negotiation__box__title__new-message">
-                  <label>Insira sua mensagem:</label>
-                  <textarea
-                    type="text"
-                    value={saveMessages}
-                    onChange={(e) => setSaveMessages(e.target.value)}
-                  />
-                </div>
-                <Button
-                  type="primary"
-                  text="Enviar"
-                  onClick={() => handleSendClick(saveMessages)}
-                />
-              </div>
-            )}
-
-            <div className="mktp-view-negotiation__box__menu">
-              {showDropdown && (
-                <div className="mktp-view-negotiation__box__menu__dropdown">
-                  <ul>
-                    <li>
-                      <Button
-                        type="secondary"
-                        text="Ver os detalhes da negociação"
-                        onClick={handleViewDetailsClick}
-                        onChange={(e) => setOfferAmount(e.target.value)}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="primary"
-                        action="submit"
-                        text="Enviar Mensagem"
-                        onClick={handleSendMessageClick}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="secondary"
-                        text="Ver Histórico de Mensagens"
-                        onClick={handleViewMessagesClick}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="primary"
-                        action="submit"
-                        text="Enviar Oferta"
-                        onClick={handleSendOfferClick}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="secondary"
-                        text="Acompanhar Status da Oferta"
-                        onClick={handleTrackOfferStatusClick}
-                      />
-                    </li>
-                    <li>
-                      <Button
-                        type="primary"
-                        text="Acompanhar Status da Entrega"
-                        onClick={handleTrackDeliveryStatusClick}
-                      />
-                    </li>
-                  </ul>
                 </div>
               )}
-            </div>
 
-            {messages.length > 0 && showMessageHistory && (
-              <>
-                <div className="separator">
-                  <div className="line"></div>
-                  <div className="line"></div>
-                </div>
-                <div className="message-history">
-                  <div className="d-flex justify-content-between">
-                    <h3>Histórico de Mensagens</h3>
+              {showChat && (
+                <div
+                  className={`mktp-view-negotiation__box__title ${
+                    showChat && "d-grid"
+                  }`}
+                >
+                  <div className="mktp-view-negotiation__box__title__wrapper d-flex justify-content-between">
+                    <h3>Chat</h3>
                     <Icon
                       className="pointer"
                       fill={"#000"}
                       size={30}
                       typeIcon={"close"}
                       onClick={() => {
-                        setShowMessageHistory(false);
+                        setShowChat(false);
                       }}
                     />
                   </div>
-                  <ul>
-                    {messages.map((message, index) => (
-                      <li key={index} className="mb-2">
-                        <strong>Remetente:</strong> {message.sender}
-                        <br />
-                        <strong>Mensagem:</strong> {message.message}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mktp-view-negotiation__box__title__new-message">
+                    <label>Insira sua mensagem:</label>
+                    <textarea
+                      type="text"
+                      value={saveMessages}
+                      onChange={(e) => setSaveMessages(e.target.value)}
+                    />
+                  </div>
+                  <Button
+                    type="primary"
+                    text="Enviar"
+                    onClick={() => handleSendClick(saveMessages)}
+                  />
                 </div>
-              </>
-            )}
-          </>
-        )}
+              )}
+
+              <div className="mktp-view-negotiation__box__menu">
+                {showDropdown && (
+                  <div className="mktp-view-negotiation__box__menu__dropdown">
+                    <ul>
+                      <li>
+                        <Button
+                          type="secondary"
+                          text="Ver os detalhes da negociação"
+                          onClick={handleViewDetailsClick}
+                          onChange={(e) => setOfferAmount(e.target.value)}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="primary"
+                          action="submit"
+                          text="Enviar Mensagem"
+                          onClick={handleSendMessageClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="secondary"
+                          text="Ver Histórico de Mensagens"
+                          onClick={handleViewMessagesClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="primary"
+                          action="submit"
+                          text="Enviar Oferta"
+                          onClick={handleSendOfferClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="secondary"
+                          text="Acompanhar Status da Oferta"
+                          onClick={handleTrackOfferStatusClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="primary"
+                          text="Acompanhar Status da Entrega"
+                          onClick={handleTrackDeliveryStatusClick}
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {messages.length > 0 && showMessageHistory && (
+                <>
+                  <div className="separator">
+                    <div className="line"></div>
+                    <div className="line"></div>
+                  </div>
+                  <div className="message-history">
+                    <div className="d-flex justify-content-between">
+                      <h3>Histórico de Mensagens</h3>
+                      <Icon
+                        className="pointer"
+                        fill={theme === "-light" ? "#000" : "#fff"}
+                        size={30}
+                        typeIcon={"close"}
+                        onClick={() => {
+                          setShowMessageHistory(false);
+                        }}
+                      />
+                    </div>
+                    <ul>
+                      {messages.map((message, index) => (
+                        <li key={index} className="mb-2">
+                          <strong>Remetente:</strong> {message.sender}
+                          <br />
+                          <strong>Mensagem:</strong> {message.message}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
+};
+
+ViewNegotiation.propTypes = {
+  toggleTheme: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default ViewNegotiation;

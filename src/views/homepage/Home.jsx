@@ -5,12 +5,11 @@ import { toast } from "react-toastify";
 import Card from "../../components/Card";
 import axios from "axios";
 
-const Home = (isAuthenticated) => {
+const Home = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [offers, setOffers] = useState([]);
   const navigateTo = useNavigate();
 
-  console.log("ISAUTH:", isAuthenticated);
 
   // Function to fetch the user's location using geolocation API
   useEffect(() => {

@@ -2,11 +2,9 @@ import { useState } from "react";
 import Button from "../components/Button.jsx";
 import Login from "../views/login/Login.jsx";
 
-const ChoosenLogin = (isAuthenticated) => {
+const ChoosenLogin = () => {
   const [showSimpleLogin, setShowSimpleLogin] = useState(false);
   const [showSsoLogin, setShowSssoLogin] = useState(false);
-
-  console.log("ISAUTH:", isAuthenticated);
 
   return (
     <>

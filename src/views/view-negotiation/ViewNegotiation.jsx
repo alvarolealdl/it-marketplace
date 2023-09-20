@@ -25,8 +25,6 @@ const ViewNegotiation = ({ theme }) => {
   const id = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
 
-  // console.log("ISAUTH:", isAuthenticated);
-
   useEffect(() => {
     fetchNegotiationData();
   }, []);
@@ -158,8 +156,6 @@ const ViewNegotiation = ({ theme }) => {
   const handleTrackDeliveryStatusClick = () => {
     navigate(`/track-delivery-status/${id}`);
   };
-
-  console.log("theme", theme);
 
   return (
     <div className={`mktp-view-negotiation`}>

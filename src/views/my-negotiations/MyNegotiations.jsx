@@ -5,14 +5,13 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button.jsx";
+
 const MyNegotiations = (isAuthenticated, theme) => {
   const [negotiations, setNegotiations] = useState([]);
   const [userOffers, setUserOffers] = useState([]);
   const { user } = useAuth0();
   const navigate = useNavigate();
 
-  console.log("ISAUTH:", isAuthenticated);
-  console.log("user", user);
   // Function to fetch user's negotiations and offers
   const fetchUserNegotiations = async () => {
     try {

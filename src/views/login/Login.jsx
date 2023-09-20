@@ -6,7 +6,7 @@ import axios from "axios";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
 
-const Login = ({ TypeLogin, isAuthenticated }) => {
+const Login = ({ TypeLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,8 +15,6 @@ const Login = ({ TypeLogin, isAuthenticated }) => {
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const navigateTo = useNavigate();
-
-  console.log("ISAUTH:", isAuthenticated);
 
   useEffect(() => {
     const dados = localStorage.setItem("authentication", "true");

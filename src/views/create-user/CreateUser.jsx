@@ -6,7 +6,7 @@ import axios from "axios";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
 
-const CreateUser = (isAuthenticated, theme) => {
+const CreateUser = (theme) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,8 +19,6 @@ const CreateUser = (isAuthenticated, theme) => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigateTo = useNavigate();
-
-  console.log("ISAUTH:", isAuthenticated);
 
   //Dealing with change of states
   const handleUsernameChange = (e) => {

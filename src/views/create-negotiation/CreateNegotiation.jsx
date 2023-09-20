@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Button from "../../components/Button";
 
-const CreateNegotiation = ({ userId, userEmail, isAuthenticated}) => {
+const CreateNegotiation = ({ userId, userEmail }) => {
   // Initialize state to store negotiation data
   const [negotiationData, setNegotiationData] = useState({
     title: "",
@@ -14,8 +14,6 @@ const CreateNegotiation = ({ userId, userEmail, isAuthenticated}) => {
     latitude: null,
     longitude: null,
   });
-
-  console.log("ISAUTH:", isAuthenticated);
 
   const navigateTo = useNavigate();
 

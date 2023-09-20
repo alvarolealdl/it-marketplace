@@ -1,7 +1,17 @@
 @import "./Variables.scss";
 
-body {
-  background: $light-gray;
+.mktp-container {
+  &-dark {
+    background-color: $light-black;
+    color: $white;
+    height: 100vh;
+  }
+
+  &-light {
+    background-color: $white;
+    color: $black;
+    height: 100vh;
+  }
 }
 
 #root {
@@ -22,7 +32,6 @@ div {
 .mktp-create-user,
 .mktp-login {
   align-items: center;
-  background-color: $light-gray;
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -55,6 +64,24 @@ div {
   }
 }
 
+.mktp-container {
+  &-light {
+    .mktp-login__box,
+    .mktp-create-user__box,
+    .mktp-create-negotiation__box {
+      background-color: $white;
+    }
+  }
+
+  &-dark {
+    .mktp-login__box,
+    .mktp-create-user__box,
+    .mktp-create-negotiation__box {
+      background-color: $light-black;
+    }
+  }
+}
+
 .separator {
   align-items: center;
   display: flex;
@@ -71,6 +98,11 @@ div {
     font-size: 0.875rem;
     margin: 0 0.625rem;
   }
+}
+
+.form-check-input:checked {
+  background-color: $light-black;
+  border-color: $light-black;
 }
 
 @media (max-width: $sm) {

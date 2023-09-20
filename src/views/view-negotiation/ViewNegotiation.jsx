@@ -110,29 +110,6 @@ const ViewNegotiation = ({ theme }) => {
     loadMessagesFromServer();
   }, []);
 
-  // Function to handle clicking "Send Offer" button
-  const handleSendOfferClick = async () => {
-    try {
-      const offerData = {
-        userId: auth.user.sub,
-        negotiationId: id,
-        amount: offerAmount,
-      };
-
-      // Send the offer data to the server
-      await axios.post(`http://localhost:3000/offers`, offerData);
-
-      fetchNegotiationData();
-    } catch (error) {
-      console.error("Erro ao fazer oferta:", error);
-      toast.error("Erro ao fazer oferta");
-    }
-  };
-
-  const handleTrackOfferStatusClick = () => {
-    navigate(`/track-offer-status/${id}`);
-  };
-
   const handleSendClick = (message) => {
     saveMessage(message);
 
@@ -150,11 +127,6 @@ const ViewNegotiation = ({ theme }) => {
     } else {
       setShowMessageHistory(false);
     }
-  };
-
-  // Function to handle clicking "Track Delivery Status" button
-  const handleTrackDeliveryStatusClick = () => {
-    navigate(`/track-delivery-status/${id}`);
   };
 
   return (
@@ -287,28 +259,6 @@ const ViewNegotiation = ({ theme }) => {
                           type="secondary"
                           text="Ver Histórico de Mensagens"
                           onClick={handleViewMessagesClick}
-                        />
-                      </li>
-                      <li>
-                        <Button
-                          type="primary"
-                          action="submit"
-                          text="Enviar Oferta"
-                          onClick={handleSendOfferClick}
-                        />
-                      </li>
-                      <li>
-                        <Button
-                          type="secondary"
-                          text="Acompanhar Status da Oferta"
-                          onClick={handleTrackOfferStatusClick}
-                        />
-                      </li>
-                      <li>
-                        <Button
-                          type="primary"
-                          text="Acompanhar Status da Entrega"
-                          onClick={handleTrackDeliveryStatusClick}
                         />
                       </li>
                     </ul>

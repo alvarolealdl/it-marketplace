@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
 
-const CreateUser = () => {
+const CreateUser = (isAuthenticated, theme) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +19,8 @@ const CreateUser = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigateTo = useNavigate();
+
+  console.log("ISAUTH:", isAuthenticated);
 
   //Dealing with change of states
   const handleUsernameChange = (e) => {
@@ -49,7 +52,7 @@ const CreateUser = () => {
     usernameRef.current.focus();
   }, []);
 
-// Check username availability by making an API request
+  // Check username availability by making an API request
   const checkUsernameAvailability = async () => {
     try {
       const response = await axios.get(
@@ -76,19 +79,19 @@ const CreateUser = () => {
       setIsErrorFixed(true);
     }
 
-     // Get values from the input fields
+    // Get values from the input fields
     const userName = usernameRef.current.value;
     const userEmail = emailRef.current.value;
     const userPassword = passwordRef.current.value;
     const userConfirmPassword = confirmPasswordRef.current.value;
 
-     // Check if any required field is empty
+    // Check if any required field is empty
     if (!userName || !userEmail || !userPassword || !userConfirmPassword) {
       toast.error("Por favor, preencha todos os campos");
       return;
     }
 
-     // Check if passwords match
+    // Check if passwords match
     if (userPassword !== userConfirmPassword) {
       toast.error("As senhas devem ser iguais");
       return;
@@ -157,79 +160,86 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="mktp-create-user">
-      <div className="mktp-create-user__box">
-        <h4>Criar Usuário</h4>
-        <form onSubmit={handleSubmit}>
-          <div className="mktp-create-user__box__wrapper">
-            <label htmlFor="username">Usuário:</label>
-            <input
-              id="username"
-              maxLength={30}
-              onChange={handleUsernameChange}
-              ref={usernameRef}
-              type="text"
-              value={username}
-            />
-          </div>
-          <div className="mktp-create-user__box__wrapper">
-            <label htmlFor="email">Email:</label>
-            <input
-              id="email"
-              onChange={handleEmailChange}
-              ref={emailRef}
-              type="text"
-              value={email}
-            />
-          </div>
-          <div className="mktp-create-user__box__wrapper">
-            <label htmlFor="password">Senha:</label>
-            <input
-              id="password"
-              name="password"
-              onChange={handlePasswordChange}
-              ref={passwordRef}
-              type={showPassword ? "text" : "password"}
-              value={password}
-            />
-            <Icon
-              className="mktp-create-user__box__wrapper__icon"
-              onClick={handleShowPassword}
-              typeIcon={showPassword ? "visible-password" : "hidden-password"}
-            />
-          </div>
-          <div className="mktp-create-user__box__wrapper">
-            <label htmlFor="confirmPassword">Confirmação Senha:</label>
-            <input
-              id="confirmPassword"
-              onChange={handleConfirmPasswordChange}
-              ref={confirmPasswordRef}
-              type={showConfirmPassword ? "text" : "password"}
-              value={confirmPassword}
-            />
-            <Icon
-              className="mktp-create-user__box__wrapper__icon"
-              onClick={handleShowConfirmPassword}
-              typeIcon={
-                showConfirmPassword ? "visible-password" : "hidden-password"
-              }
-            />
-          </div>
-          <div className="mktp-create-user__box__wrapper">
-            <Link to="/login">
-              <Button type="secondary" className="w-auto" text="Voltar" />
-            </Link>
-            <Button
-              type="primary"
-              action="submit"
-              className="w-auto"
-              text="Criar Usuário"
-            />
-          </div>
-        </form>
+    <div className={`mktp-create-user${theme}`}>
+      <div className="mktp-create-user">
+        <div className="mktp-create-user__box">
+          <h4>Criar Usuário</h4>
+          <form onSubmit={handleSubmit}>
+            <div className="mktp-create-user__box__wrapper">
+              <label htmlFor="username">Usuário:</label>
+              <input
+                id="username"
+                maxLength={30}
+                onChange={handleUsernameChange}
+                ref={usernameRef}
+                type="text"
+                value={username}
+              />
+            </div>
+            <div className="mktp-create-user__box__wrapper">
+              <label htmlFor="email">Email:</label>
+              <input
+                id="email"
+                onChange={handleEmailChange}
+                ref={emailRef}
+                type="text"
+                value={email}
+              />
+            </div>
+            <div className="mktp-create-user__box__wrapper">
+              <label htmlFor="password">Senha:</label>
+              <input
+                id="password"
+                name="password"
+                onChange={handlePasswordChange}
+                ref={passwordRef}
+                type={showPassword ? "text" : "password"}
+                value={password}
+              />
+              <Icon
+                className="mktp-create-user__box__wrapper__icon"
+                onClick={handleShowPassword}
+                typeIcon={showPassword ? "visible-password" : "hidden-password"}
+              />
+            </div>
+            <div className="mktp-create-user__box__wrapper">
+              <label htmlFor="confirmPassword">Confirmação Senha:</label>
+              <input
+                id="confirmPassword"
+                onChange={handleConfirmPasswordChange}
+                ref={confirmPasswordRef}
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+              />
+              <Icon
+                className="mktp-create-user__box__wrapper__icon"
+                onClick={handleShowConfirmPassword}
+                typeIcon={
+                  showConfirmPassword ? "visible-password" : "hidden-password"
+                }
+              />
+            </div>
+            <div className="mktp-create-user__box__wrapper">
+              <Link to="/login">
+                <Button type="secondary" className="w-auto" text="Voltar" />
+              </Link>
+              <Button
+                type="primary"
+                action="submit"
+                className="w-auto"
+                text="Criar Usuário"
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
+};
+
+CreateUser.propTypes = {
+  toggleTheme: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default CreateUser;

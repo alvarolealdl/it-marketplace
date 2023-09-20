@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "../../components/Card";
 import axios from "axios";
 
-const Home = () => {
+const Home = (isAuthenticated) => {
   const [userLocation, setUserLocation] = useState(null);
   const [offers, setOffers] = useState([]);
   const navigateTo = useNavigate();
+
+  console.log("ISAUTH:", isAuthenticated);
 
   // Function to fetch the user's location using geolocation API
   useEffect(() => {
@@ -117,24 +120,29 @@ const Home = () => {
   const handleEnterClick = (offerId) => {
     navigateTo(`/negotiation/${offerId}`);
   };
-  
+
   return (
     <div className="container">
-      <div className="mktp-homepage">
-        <div className="mktp-homepage__grid-container">
-          {offers.map((offer) => (
-            <Card
-              key={offer.id}
-              title={offer.title}
-              description={offer.description}
-              onClick={() => handleEnterClick(offer.id)}
-              buttonText="Entrar"
-            />
-          ))}
-        </div>
+      <div className={`mktp-homepage`}>
+          <div className="mktp-homepage__grid-container">
+            {offers.map((offer) => (
+              <Card
+                key={offer.id}
+                title={offer.title}
+                description={offer.description}
+                onClick={() => handleEnterClick(offer.id)}
+                buttonText="Entrar"
+              />
+            ))}
+          </div>
       </div>
     </div>
   );
+};
+
+Home.propTypes = {
+  toggleTheme: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default Home;

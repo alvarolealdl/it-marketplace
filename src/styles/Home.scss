@@ -10,7 +10,6 @@
     gap: 1rem;
 
     &__card {
-      background-color: $medium-gray;
       border-radius: 0.25rem;
       display: grid;
       grid-template-rows: min-content;
@@ -18,7 +17,7 @@
       width: 100%;
 
       h3 {
-        border-bottom: 1px solid #000;
+        border-bottom: 0.0625rem solid $black;
       }
 
       &__title {
@@ -64,6 +63,29 @@
         &:nth-child(odd) {
           margin-right: 0;
         }
+      }
+    }
+  }
+}
+
+.mktp-container {
+  &-light {
+    .mktp-homepage__grid-container__card {
+      background-color: $medium-gray;
+    }
+  }
+
+  &-dark {
+    .mktp-homepage__grid-container__card {
+      background-color: $dark-gray;
+
+      h3 {
+        border-bottom: 0.0625rem solid $white;
+        color: $white;
+      }
+
+      p {
+        color: $white;
       }
     }
   }

@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import ChoosenLogin from "../src/components/ChoosenLogin.jsx";
 import Login from "./views/login/Login.jsx";
 import CreateUser from "../src/views/create-user/CreateUser.jsx";
@@ -10,11 +12,32 @@ import ViewNegotiation from "./views/view-negotiation/ViewNegotiation.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const MarketplaceRouter = () => {
-  // Use Auth0 to get user authentication status and user information
   const { user, isAuthenticated } = useAuth0();
+  const [theme, setTheme] = useState("-light");
+
+  // Switch theme function
+  const toggleTheme = () => {
+    if (theme === "-light") {
+      setTheme("-dark");
+      // Save the user's choice in localStorage
+      localStorage.setItem("theme", "-dark");
+    } else {
+      setTheme("-light");
+      localStorage.setItem("theme", "-light");
+    }
+  };
+
+  // Effect to load the theme saved in localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
   return (
-    <div className="mktp-container">
-      <Header />
+    <div className={`mktp-container${theme}`}>
+      <Header toggleTheme={toggleTheme} theme={theme} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<ChoosenLogin />} />
@@ -32,11 +55,14 @@ const MarketplaceRouter = () => {
         />
         <Route
           path="/negotiation/:negotiationId"
-          element={<ViewNegotiation />}
+          element={<ViewNegotiation theme={theme} />}
         />
 
         <Route path="/my-negotiations/" element={<MyNegotiations />} />
-        <Route path="/my-negotiations/:id" element={<ViewNegotiation />} />
+        <Route
+          path="/my-negotiations/:id"
+          element={<ViewNegotiation theme={theme} />}
+        />
       </Routes>
     </div>
   );

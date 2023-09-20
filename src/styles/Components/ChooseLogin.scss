@@ -1,0 +1,17 @@
+@import "../Variables.scss";
+
+.mktp-choose-login {
+  &__buttons {
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: $sm) {
+  .mktp-choose-login {
+    &__buttons {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import axios from "axios";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
 
-const Login = ({ TypeLogin }) => {
+const Login = ({ TypeLogin, isAuthenticated }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +15,15 @@ const Login = ({ TypeLogin }) => {
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const navigateTo = useNavigate();
+
+  console.log("ISAUTH:", isAuthenticated);
+
+  useEffect(() => {
+    const dados = localStorage.setItem("authentication", "true");
+    if (dados === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   console.log(isLoggedIn);
   // Check if the user was previously logged in
@@ -70,6 +79,7 @@ const Login = ({ TypeLogin }) => {
       }
       if (foundUser) {
         localStorage.setItem("user", JSON.stringify(foundUser));
+        localStorage.setItem("authentication", "true");
         setUsername("");
         setPassword("");
         toggleLogin(true);
@@ -83,96 +93,98 @@ const Login = ({ TypeLogin }) => {
   };
 
   return (
-    <div className="mktp-login">
-      <div className="mktp-login__info">
-        <h1>Bem vindo ao Mercado TI</h1>
-        <h4>
-          Soluções em periféricos e gadgets para profissionais freelancer da
-          área de tecnologia
-        </h4>
-      </div>
-      <div className={`mktp-login__box ${TypeLogin === "sso" && "d-grid"}`}>
-        <h4>
-          Login
-          {TypeLogin === "simple"
-            ? " simples"
-            : TypeLogin === "sso"
-            ? " com SSO"
-            : ""}
-        </h4>
-        <form onSubmit={handleSubmit}>
-          {TypeLogin === "simple" && (
-            <>
-              <div className="mktp-login__box__wrapper">
-                <label>Usuário:</label>
-                <input
-                  type="text"
-                  id="username"
-                  maxLength={30}
-                  onChange={handleUsernameChange}
-                  ref={usernameRef}
-                  value={username}
-                />
-              </div>
-              <div className="mktp-login__box__wrapper">
-                <label>Senha:</label>
-                <input
-                  autoComplete="current-password"
-                  id="password"
-                  name="password"
-                  onChange={handlePasswordChange}
-                  ref={passwordRef}
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                />
-                <Icon
-                  className="login-icon"
-                  typeIcon={
-                    showPassword ? "visible-password" : "hidden-password"
-                  }
-                  onClick={handleShowPassword}
-                />
-              </div>
-            </>
-          )}
-          <div className="mktp-login__box__wrapper">
-            <Button
-              type={
-                TypeLogin === "simple"
-                  ? "primary"
-                  : TypeLogin === "sso"
-                  ? "login"
-                  : ""
-              }
-              action={
-                TypeLogin === "simple"
-                  ? "submit"
-                  : TypeLogin === "sso"
-                  ? ""
-                  : ""
-              }
-              text={
-                TypeLogin === "simple"
-                  ? "Entrar"
-                  : TypeLogin === "sso"
-                  ? "Fazer Login"
-                  : ""
-              }
-            />
+    <div className={`mktp-login`}>
+      <div className="mktp-login">
+        <div className="mktp-login__info">
+          <h1>Bem vindo ao Mercado TI</h1>
+          <h4>
+            Soluções em periféricos e gadgets para profissionais freelancer da
+            área de tecnologia
+          </h4>
+        </div>
+        <div className={`mktp-login__box ${TypeLogin === "sso" && "d-grid"}`}>
+          <h4>
+            Login
+            {TypeLogin === "simple"
+              ? " simples"
+              : TypeLogin === "sso"
+              ? " com SSO"
+              : ""}
+          </h4>
+          <form onSubmit={handleSubmit}>
             {TypeLogin === "simple" && (
               <>
-                <div className="separator">
-                  <div className="line"></div>
-                  <p>ou</p>
-                  <div className="line"></div>
+                <div className="mktp-login__box__wrapper">
+                  <label>Usuário:</label>
+                  <input
+                    type="text"
+                    id="username"
+                    maxLength={30}
+                    onChange={handleUsernameChange}
+                    ref={usernameRef}
+                    value={username}
+                  />
                 </div>
-                <Link to="/create-user" className="create-account">
-                  <Button type="secondary" text="Criar novo usuário" />
-                </Link>
+                <div className="mktp-login__box__wrapper">
+                  <label>Senha:</label>
+                  <input
+                    autoComplete="current-password"
+                    id="password"
+                    name="password"
+                    onChange={handlePasswordChange}
+                    ref={passwordRef}
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                  />
+                  <Icon
+                    className="login-icon"
+                    typeIcon={
+                      showPassword ? "visible-password" : "hidden-password"
+                    }
+                    onClick={handleShowPassword}
+                  />
+                </div>
               </>
             )}
-          </div>
-        </form>
+            <div className="mktp-login__box__wrapper">
+              <Button
+                type={
+                  TypeLogin === "simple"
+                    ? "primary"
+                    : TypeLogin === "sso"
+                    ? "login"
+                    : ""
+                }
+                action={
+                  TypeLogin === "simple"
+                    ? "submit"
+                    : TypeLogin === "sso"
+                    ? ""
+                    : ""
+                }
+                text={
+                  TypeLogin === "simple"
+                    ? "Entrar"
+                    : TypeLogin === "sso"
+                    ? "Fazer Login"
+                    : ""
+                }
+              />
+              {TypeLogin === "simple" && (
+                <>
+                  <div className="separator">
+                    <div className="line"></div>
+                    <p>ou</p>
+                    <div className="line"></div>
+                  </div>
+                  <Link to="/create-user" className="create-account">
+                    <Button type="secondary" text="Criar novo usuário" />
+                  </Link>
+                </>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
@@ -180,6 +192,9 @@ const Login = ({ TypeLogin }) => {
 
 Login.propTypes = {
   TypeLogin: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  toggleTheme: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default Login;

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Button from "../../components/Button";
 
-const CreateNegotiation = ({ userId, userEmail }) => {
+const CreateNegotiation = ({ userId, userEmail, isAuthenticated}) => {
   // Initialize state to store negotiation data
   const [negotiationData, setNegotiationData] = useState({
     title: "",
@@ -14,6 +14,8 @@ const CreateNegotiation = ({ userId, userEmail }) => {
     latitude: null,
     longitude: null,
   });
+
+  console.log("ISAUTH:", isAuthenticated);
 
   const navigateTo = useNavigate();
 
@@ -84,49 +86,51 @@ const CreateNegotiation = ({ userId, userEmail }) => {
   };
 
   return (
-    <div className="mktp-create-negotiation">
-      <div className="mktp-create-negotiation__box">
-        <h4>Criar Negociação</h4>
-        <form>
-          <div className="mktp-create-negotiation__wrapper">
-            <label>Título:</label>
-            <input
-              type="text"
-              name="title"
-              value={negotiationData.title}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mktp-create-negotiation__wrapper">
-            <label>Descrição:</label>
-            <textarea
-              name="description"
-              value={negotiationData.description}
-              onChange={handleInputChange}
-            ></textarea>
-          </div>
-          <div className="mktp-create-negotiation__wrapper">
-            <label>Preço:</label>
-            <input
-              type="number"
-              name="price"
-              value={negotiationData.price}
-              onChange={handleInputChange}
-              onKeyUp={handleSearchKeyPress}
-            />
-          </div>
-          <div className="mktp-create-negotiation__wrapper">
-            <Link to="/">
-              <Button type="secondary" text="Voltar" />
-            </Link>
-            <Button
-              type="primary"
-              text="Salvar Negociação"
-              className="w-auto"
-              onClick={handleSaveNegotiation}
-            />
-          </div>
-        </form>
+    <div className={`mktp-create-negotiation`}>
+      <div className="mktp-create-negotiation">
+        <div className="mktp-create-negotiation__box">
+          <h4>Criar Negociação</h4>
+          <form>
+            <div className="mktp-create-negotiation__wrapper">
+              <label>Título:</label>
+              <input
+                type="text"
+                name="title"
+                value={negotiationData.title}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="mktp-create-negotiation__wrapper">
+              <label>Descrição:</label>
+              <textarea
+                name="description"
+                value={negotiationData.description}
+                onChange={handleInputChange}
+              ></textarea>
+            </div>
+            <div className="mktp-create-negotiation__wrapper">
+              <label>Preço:</label>
+              <input
+                type="number"
+                name="price"
+                value={negotiationData.price}
+                onChange={handleInputChange}
+                onKeyUp={handleSearchKeyPress}
+              />
+            </div>
+            <div className="mktp-create-negotiation__wrapper">
+              <Link to="/">
+                <Button type="secondary" text="Voltar" />
+              </Link>
+              <Button
+                type="primary"
+                text="Salvar Negociação"
+                className="w-auto"
+                onClick={handleSaveNegotiation}
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
@@ -135,6 +139,7 @@ const CreateNegotiation = ({ userId, userEmail }) => {
 CreateNegotiation.propTypes = {
   userId: PropTypes.number,
   userEmail: PropTypes.number,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default CreateNegotiation;

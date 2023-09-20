@@ -27,3 +27,17 @@
     }
   }
 }
+
+.mktp-container {
+  &-light {
+    .mktp-my-negotiations ul li {
+      background-color: $light-gray;
+    }
+  }
+
+  &-dark {
+    .mktp-my-negotiations ul li {
+      background-color: $light-black;
+    }
+  }
+}

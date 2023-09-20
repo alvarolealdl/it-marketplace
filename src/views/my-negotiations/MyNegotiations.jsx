@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button.jsx";
-
-const MyNegotiations = () => {
+const MyNegotiations = (isAuthenticated, theme) => {
   const [negotiations, setNegotiations] = useState([]);
   const [userOffers, setUserOffers] = useState([]);
-  const { isAuthenticated, user } = useAuth0();
+  const { user } = useAuth0();
   const navigate = useNavigate();
 
+  console.log("ISAUTH:", isAuthenticated);
+  console.log("user", user);
   // Function to fetch user's negotiations and offers
   const fetchUserNegotiations = async () => {
     try {
       let userEmail;
 
       // Check if the user is authenticated
-      if (isAuthenticated) {
+      if (isAuthenticated && user !== undefined) {
         userEmail = user.email;
       } else {
         userEmail = "guest@example.com";
@@ -41,7 +43,9 @@ const MyNegotiations = () => {
       setUserOffers(userOffers);
     } catch (error) {
       console.error("Erro ao buscar negociações e ofertas do usuário:", error);
-      toast.error("Erro ao buscar negociações e ofertas do usuário");
+      toast.error(
+        user !== undefined && "Erro ao buscar negociações e ofertas do usuário"
+      );
     }
   };
 
@@ -61,26 +65,33 @@ const MyNegotiations = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="mktp-my-negotiations">
-      <h2>Minhas Negociações</h2>
-      <ul>
-        {negotiations.map((negotiation) => (
-          <li key={negotiation.id}>
-            <p>Título: {negotiation.title}</p>
-            <p>Descrição: {negotiation.description}</p>
-            <p>Preço: {negotiation.price}</p>
-            {isAuthenticated && hasUserOffer(negotiation.id) && (
-              <Button
-                type="primary"
-                text="Editar Oferta"
-                onClick={() => handleEditOfferClick(negotiation.id)}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className={`mktp-my-negotiations ${theme}`}>
+      <div className="mktp-my-negotiations">
+        <h2>Minhas Negociações</h2>
+        <ul>
+          {negotiations.map((negotiation) => (
+            <li key={negotiation.id}>
+              <p>Título: {negotiation.title}</p>
+              <p>Descrição: {negotiation.description}</p>
+              <p>Preço: {negotiation.price}</p>
+              {isAuthenticated && hasUserOffer(negotiation.id) && (
+                <Button
+                  type="primary"
+                  text="Editar Oferta"
+                  onClick={() => handleEditOfferClick(negotiation.id)}
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
+};
+
+MyNegotiations.propTypes = {
+  toggleTheme: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default MyNegotiations;

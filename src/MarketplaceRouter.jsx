@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ChoosenLogin from "../src/components/ChoosenLogin.jsx";
 import Login from "./views/login/Login.jsx";
@@ -15,6 +15,8 @@ import Footer from "./components/Footer.jsx";
 const MarketplaceRouter = () => {
   const { user, isAuthenticated } = useAuth0();
   const [theme, setTheme] = useState("-light");
+  const location = useLocation();
+  const normalUser = location.state && location.state.foundUser;
 
   // Switch theme function
   const toggleTheme = () => {
@@ -41,18 +43,25 @@ const MarketplaceRouter = () => {
       <div className="mktp-content">
         <Header toggleTheme={toggleTheme} theme={theme} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home foundUser={normalUser} />} />
           <Route path="/login" element={<ChoosenLogin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/create-user" element={<CreateUser />} />
           <Route
             path="/create-negotiation"
             element={
-              isAuthenticated ? (
-                <CreateNegotiation userId={user} userEmail={user.email} />
-              ) : (
-                <CreateNegotiation />
-              )
+              <CreateNegotiation
+                userId={
+                  isAuthenticated ? user : normalUser ? normalUser.username : ""
+                }
+                userEmail={
+                  isAuthenticated
+                    ? user.email
+                    : normalUser
+                    ? normalUser.email
+                    : ""
+                }
+              />
             }
           />
           <Route

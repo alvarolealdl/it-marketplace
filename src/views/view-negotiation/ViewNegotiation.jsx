@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "../../components/Button.jsx";
 import Icon from "../../components/Icon.jsx";
@@ -21,14 +21,16 @@ const ViewNegotiation = ({ theme }) => {
   const [saveMessages, setSaveMessages] = useState("");
   const [messages, setMessages] = useState([]);
   const [offerAmount, setOfferAmount] = useState("");
-  const { auth, user } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const id = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
+  const location = useLocation();
+  const normalUser = location.state && location.state.foundUser.foundUser;
 
   useEffect(() => {
     fetchNegotiationData();
   }, []);
-
+  
   const fetchNegotiationData = async () => {
     try {
       const response = await axios.get(
@@ -38,9 +40,12 @@ const ViewNegotiation = ({ theme }) => {
       setNegotiationData(negotiation);
 
       // Determine the user's role in the negotiation
-      const userId = auth.user.sub;
-      const creatorId = negotiation.creatorId;
-      const isCreator = userId === creatorId;
+      const userIdAuth0Logged = isAuthenticated ? user.sub : "";
+      const userIdNormalLogged = normalUser.id;
+
+      const creatorId = negotiation.id;
+
+      const isCreator = (userIdAuth0Logged || userIdNormalLogged) === creatorId;
 
       setUserRole(isCreator ? "negotiation-creator" : "other");
     } catch (error) {
@@ -110,6 +115,29 @@ const ViewNegotiation = ({ theme }) => {
     loadMessagesFromServer();
   }, []);
 
+  // Function to handle clicking "Send Offer" button
+  const handleSendOfferClick = async () => {
+    try {
+      const offerData = {
+        userId: auth.user.sub,
+        negotiationId: id,
+        amount: offerAmount,
+      };
+
+      // Send the offer data to the server
+      await axios.post(`http://localhost:3000/offers`, offerData);
+
+      fetchNegotiationData();
+    } catch (error) {
+      console.error("Erro ao fazer oferta:", error);
+      toast.error("Erro ao fazer oferta");
+    }
+  };
+
+  const handleTrackOfferStatusClick = () => {
+    navigate(`/track-offer-status/${id}`);
+  };
+
   const handleSendClick = (message) => {
     saveMessage(message);
 
@@ -127,6 +155,11 @@ const ViewNegotiation = ({ theme }) => {
     } else {
       setShowMessageHistory(false);
     }
+  };
+
+  // Function to handle clicking "Track Delivery Status" button
+  const handleTrackDeliveryStatusClick = () => {
+    navigate(`/track-delivery-status/${id}`);
   };
 
   return (
@@ -185,7 +218,7 @@ const ViewNegotiation = ({ theme }) => {
             </>
           )}
 
-          {userRole !== "other" && (
+          {userRole === "other" && (
             <>
               {!showChat && (
                 <div className="mktp-view-negotiation__box__title">
@@ -259,6 +292,28 @@ const ViewNegotiation = ({ theme }) => {
                           type="secondary"
                           text="Ver Histórico de Mensagens"
                           onClick={handleViewMessagesClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="primary"
+                          action="submit"
+                          text="Enviar Oferta"
+                          onClick={handleSendOfferClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="secondary"
+                          text="Acompanhar Status da Oferta"
+                          onClick={handleTrackOfferStatusClick}
+                        />
+                      </li>
+                      <li>
+                        <Button
+                          type="primary"
+                          text="Acompanhar Status da Entrega"
+                          onClick={handleTrackDeliveryStatusClick}
                         />
                       </li>
                     </ul>

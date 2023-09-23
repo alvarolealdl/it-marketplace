@@ -5,12 +5,10 @@ import { toast } from "react-toastify";
 import Card from "../../components/Card";
 import axios from "axios";
 
-const Home = () => {
+const Home = (foundUser) => {
   const [userLocation, setUserLocation] = useState(null);
   const [offers, setOffers] = useState([]);
   const navigateTo = useNavigate();
-
-
   // Function to fetch the user's location using geolocation API
   useEffect(() => {
     const getUserLocation = () => {
@@ -117,23 +115,23 @@ const Home = () => {
 
   // Function to handle click on offer card and navigate to the offer details
   const handleEnterClick = (offerId) => {
-    navigateTo(`/negotiation/${offerId}`);
+    navigateTo(`/negotiation/${offerId}`, { state: { foundUser } });
   };
 
   return (
     <div className="container">
       <div className={`mktp-homepage`}>
-          <div className="mktp-homepage__grid-container">
-            {offers.map((offer) => (
-              <Card
-                key={offer.id}
-                title={offer.title}
-                description={offer.description}
-                onClick={() => handleEnterClick(offer.id)}
-                buttonText="Entrar"
-              />
-            ))}
-          </div>
+        <div className="mktp-homepage__grid-container">
+          {offers.map((offer) => (
+            <Card
+              key={offer.id}
+              title={offer.title}
+              description={offer.description}
+              onClick={() => handleEnterClick(offer.id)}
+              buttonText="Entrar"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -81,7 +81,7 @@ const Login = ({ TypeLogin }) => {
         setUsername("");
         setPassword("");
         toggleLogin(true);
-        navigateTo("/?isLoggedIn=true");
+        navigateTo("/?isLoggedIn=true", { state: { foundUser } });
       } else {
         toast.warn("Usuário ou senha inválidos");
       }

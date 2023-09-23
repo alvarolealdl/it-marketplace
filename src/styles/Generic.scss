@@ -1,6 +1,13 @@
 @import "./Variables.scss";
 
 .mktp-container {
+  &-dark,
+  &-light {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
   &-dark {
     background-color: $light-black;
     color: $white;
@@ -12,6 +19,10 @@
     color: $black;
     height: 100vh;
   }
+}
+
+.mktp-content {
+  flex: 1 1 auto;
 }
 
 #root {

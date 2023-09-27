@@ -41,16 +41,21 @@ const ViewNegotiation = ({ theme }) => {
 
       // Determine the user's role in the negotiation
       const userIdAuth0Logged = isAuthenticated ? user.sub : "";
-      const userIdNormalLogged = normalUser.id;
+      const userIdNormalLogged = normalUser ? normalUser.id : "";
+      const creatorIdAuth = negotiation.creatorId
+        ? negotiation.creatorId.sub
+        : "";
+      const creatorIdNormal = negotiation.id;
 
-      const creatorId = negotiation.id;
-
-      const isCreator = (userIdAuth0Logged || userIdNormalLogged) === creatorId;
+      const isCreator =
+        userIdAuth0Logged === creatorIdAuth ||
+        userIdNormalLogged === creatorIdNormal;
 
       setUserRole(isCreator ? "negotiation-creator" : "other");
     } catch (error) {
       console.error(
-        "Erro ao buscar negociação. Faça login para visualizar mais detalhes"
+        "Erro ao buscar negociação. Faça login para visualizar mais detalhes",
+        error
       );
     }
   };

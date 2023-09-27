@@ -9,21 +9,33 @@
   ],
   "negotiations": [
     {
-      "title": "Exemplo 1",
-      "description": "Exemplo 1 descrição",
+      "title": "Primeiro Exemplo",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "price": "500,00",
+      "latitude": -8.1199104,
+      "longitude": -34.89792,
+      "creatorId": "",
+      "creatorEmail": "",
       "id": 1
     },
     {
-      "title": "Exemplo 2",
-      "description": "Exemplo 2 descrição",
+      "title": "Segundo Exemplo",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "price": "100,00",
+      "latitude": -8.1199104,
+      "longitude": -34.89792,
+      "creatorId": "",
+      "creatorEmail": "",
       "id": 1
     },
     {
-      "title": "Exemplo 3",
-      "description": "Exemplo 3 descrição",
+      "title": "Terceiro Exemplo",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "price": "700,00",
+      "latitude": -8.1199104,
+      "longitude": -34.89792,
+      "creatorId": "",
+      "creatorEmail": "",
       "id": 3
     }
   ],

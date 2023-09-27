@@ -25,12 +25,12 @@ const ViewNegotiation = ({ theme }) => {
   const id = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
   const location = useLocation();
-  const normalUser = location.state && location.state.foundUser.foundUser;
+  const normalUser = location.state && location.state.foundUser;
 
   useEffect(() => {
     fetchNegotiationData();
   }, []);
-  
+
   const fetchNegotiationData = async () => {
     try {
       const response = await axios.get(
@@ -49,8 +49,9 @@ const ViewNegotiation = ({ theme }) => {
 
       setUserRole(isCreator ? "negotiation-creator" : "other");
     } catch (error) {
-      console.error("Erro ao buscar negociação:", error);
-      toast.error("Erro ao buscar negociação");
+      console.error(
+        "Erro ao buscar negociação. Faça login para visualizar mais detalhes"
+      );
     }
   };
 
@@ -119,7 +120,7 @@ const ViewNegotiation = ({ theme }) => {
   const handleSendOfferClick = async () => {
     try {
       const offerData = {
-        userId: auth.user.sub,
+        userId: user.sub,
         negotiationId: id,
         amount: offerAmount,
       };

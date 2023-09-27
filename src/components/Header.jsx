@@ -214,6 +214,7 @@ const Header = ({ toggleTheme, theme, searchValue }) => {
 Header.propTypes = {
   toggleTheme: PropTypes.func,
   theme: PropTypes.string,
+  searchValue: PropTypes.func,
 };
 
 export default Header;

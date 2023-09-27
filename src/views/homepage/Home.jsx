@@ -147,6 +147,8 @@ const Home = ({ foundUser, searchValue }) => {
 Home.propTypes = {
   toggleTheme: PropTypes.func,
   theme: PropTypes.string,
+  foundUser: PropTypes.string,
+  searchValue: PropTypes.func,
 };
 
 export default Home;

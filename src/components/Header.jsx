@@ -9,7 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 import axios from "axios";
 
-const Header = ({ toggleTheme, theme }) => {
+const Header = ({ toggleTheme, theme, searchValue }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
@@ -36,6 +36,8 @@ const Header = ({ toggleTheme, theme }) => {
           )}`
         );
 
+        searchValue(searchTerm);
+
         if (response.status === 200) {
           navigateTo(`/?query=${encodeURIComponent(searchTerm)}`);
         } else {
@@ -45,7 +47,16 @@ const Header = ({ toggleTheme, theme }) => {
         console.error("Erro ao buscar negociações:", error);
         toast.error("Erro ao buscar negociações.");
       }
+    } else {
+      // If you search for an empty value, no filter will be applied
+      searchValue("");
+      navigateTo("/");
     }
+  };
+
+  // Function to clean input text
+  const clearInput = () => {
+    setSearchTerm("");
   };
 
   const handleLinkClick = (e, path) => {
@@ -108,6 +119,15 @@ const Header = ({ toggleTheme, theme }) => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyUp={handleSearchKeyPress}
                   />
+                  {searchTerm && (
+                    <Icon
+                      className="clean-icon pointer"
+                      fill={theme === "-light" ? "#fff" : "#000"}
+                      size={30}
+                      typeIcon={"close"}
+                      onClick={clearInput}
+                    />
+                  )}
                   <Button type="primary" text="Buscar" onClick={handleSearch} />
                 </div>
               )}

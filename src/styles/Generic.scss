@@ -33,6 +33,12 @@
   cursor: pointer;
 }
 
+.clean-icon {
+  position: absolute;
+  right: 0;
+  transform: translate(-7.1875rem, 0.4375rem);
+}
+
 div {
   h4 {
     font-weight: bold;
@@ -80,7 +86,7 @@ div {
     .mktp-login__box,
     .mktp-create-user__box,
     .mktp-create-negotiation__box {
-      background-color: $white;
+      background-color: $medium-gray;
     }
   }
 

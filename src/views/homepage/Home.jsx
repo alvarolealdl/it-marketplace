@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import Card from "../../components/Card";
 import axios from "axios";
 
-const Home = (foundUser) => {
+const Home = ({ foundUser, searchValue }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [offers, setOffers] = useState([]);
   const navigateTo = useNavigate();
+
   // Function to fetch the user's location using geolocation API
   useEffect(() => {
     const getUserLocation = () => {
@@ -52,7 +53,13 @@ const Home = (foundUser) => {
         if (response.status === 200) {
           const allOffers = response.data;
 
-          const sortedOffers = allOffers.slice();
+          // Filter offers based on the search value
+          const filteredOffers = allOffers.filter((offer) =>
+            offer.title.toLowerCase().includes(searchValue.toLowerCase())
+          );
+
+          const sortedOffers = filteredOffers.slice(); // Use the filtered offers
+
           sortedOffers.sort((a, b) => {
             if (!userLocation) {
               return 0;
@@ -75,9 +82,9 @@ const Home = (foundUser) => {
           });
 
           // Select the top 15 offers
-          const topNineOffers = sortedOffers.slice(0, 15);
+          const topFifteenOffers = sortedOffers.slice(0, 15);
 
-          setOffers(topNineOffers);
+          setOffers(topFifteenOffers);
         } else {
           console.error("Erro ao carregar as ofertas do arquivo DB");
           toast.error("Erro ao carregar as ofertas do arquivo DB");
@@ -89,7 +96,7 @@ const Home = (foundUser) => {
     };
 
     loadOffersFromJSON();
-  }, [userLocation]);
+  }, [userLocation, searchValue]);
 
   // Function to calculate distance between two coordinates using Haversine formula
   const calculateDistance = (lat1, lon1, lat2, lon2) => {

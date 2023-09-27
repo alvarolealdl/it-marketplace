@@ -15,6 +15,7 @@ import Footer from "./components/Footer.jsx";
 const MarketplaceRouter = () => {
   const { user, isAuthenticated } = useAuth0();
   const [theme, setTheme] = useState("-light");
+  const [searchValueResult, setSearchValueResult] = useState("");
   const location = useLocation();
   const normalUser = location.state && location.state.foundUser;
 
@@ -38,12 +39,25 @@ const MarketplaceRouter = () => {
     }
   }, []);
 
+  const searchValue = (valor) => {
+    setSearchValueResult(valor);
+  };
+
   return (
     <div className={`mktp-container${theme}`}>
       <div className="mktp-content">
-        <Header toggleTheme={toggleTheme} theme={theme} />
+        <Header
+          toggleTheme={toggleTheme}
+          theme={theme}
+          searchValue={searchValue}
+        />
         <Routes>
-          <Route path="/" element={<Home foundUser={normalUser} />} />
+          <Route
+            path="/"
+            element={
+              <Home foundUser={normalUser} searchValue={searchValueResult} />
+            }
+          />
           <Route path="/login" element={<ChoosenLogin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/create-user" element={<CreateUser />} />

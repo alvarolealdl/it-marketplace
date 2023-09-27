@@ -96,7 +96,10 @@
 .mktp-container {
   &-light {
     .mktp-view-negotiation__box {
+      background-color: $medium-gray;
+
       &__title {
+        background-color: $white;
         color: $black;
       }
     }
